@@ -1,14 +1,12 @@
 // const productService = require('../services/productService')
-import { register } from "ts-node"
-import productService from "../services/productService"
+import productService from "./productService"
 
 import express, { Express, Request, Response } from 'express'
 
 
-
-function getAllProducts(req:Request, res:Response) {
+async function getAllProducts(req:Request, res:Response) {
     const max  = Number(req.query.max)
-    const context = productService.getAllProducts(max)
+    const context = await productService.getAllProducts(max)
     res.render('products', context)
 }
 
@@ -37,17 +35,5 @@ const productControllers = {
     getProductById: getProductById,
     createProduct: createProduct
 }
-
-
-exports.register = async (req, res) => {
-    try {
-      const { username, email, password } = req.body;
-      const user = new User ({ username, email, password });
-      await user.save();
-      res.status(201).json({ message: 'Користувач Зарєєструвався' });
-    } catch (error) {
-      res.status(400).json({ message: 'Registration failed', error });
-    }
-  };
 
 export default productControllers
